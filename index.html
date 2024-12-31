@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision of Doom: Rise of the hero</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<script src="https://kit.fontawesome.com/7964c0a8ac.js" crossorigin="anonymous"></script>
+<body ondragstart="return false;" onselectstart="return false;" style="user-select: none; -webkit-user-drag: none;">
+    
+    <div id="start-overlay">
+        <div id="start-content">
+            <h1>Vision of Doom: Rise of the hero</h1>
+            <p>For the best experience, press F11 to play in full screen.</p>
+            <button id="start-button" onclick="startGame()">Start Game</button>
+        </div>
+        <div class="tutorial" id="tutorial" style="display: none;">
+            <div id="closeB">&times;</div>
+            <div class="scroll">
+              <div class="content" id="tutorial-content">
+                <h1>Welcome, Adventurer!</h1>
+                <p>Use the arrow keys to move and space to attack.</p>
+              </div>
+            </div>
+            <div class="controls">
+              <button id="prev-btn" class="scroll-button">◀</button>
+              <button id="next-btn" class="scroll-button">▶</button>
+            </div>
+          </div>
+          <button onclick="tutorialButton()" id="tutbtn">Tutorial</button>
+    </div>
+    
+<div id="game-container">
+    <button id="openSettings"><i class="fa-solid fa-music"></i></button>
+
+    <div id="settingsPage" style="display: none;">
+        <label>
+            <input type="checkbox" id="muteMusic"> Mute Music
+        </label>
+        <label>
+            <input type="checkbox" id="muteSFX"> Mute SFX
+        </label>
+        <label>
+            Music Volume
+            <input type="range" id="musicVolume" min="0" max="1" step="0.01" value="1">
+        </label>
+        <label>
+            SFX Volume
+            <input type="range" id="sfxVolume" min="0" max="1" step="0.01" value="1">
+        </label>
+        <button id="closeSettings"><i class="fa-solid fa-play"></i></button></div>
+
+<div id="wave-summary">
+    <div id="summary-tabs">
+        <button class="tab-button" onclick="showTab('stats')">Upgrade</button>
+        <button class="tab-button" onclick="showTab('abilities')">Casts</button>
+        <button class="tab-button" onclick="showTab('skins')">Stats</button>
+    </div>
+    <p id="points-gained">0 <img src="coin32.png" style="width:16px; height:16px;" alt=""></p>
+
+    <div id="tabs-content">
+        <div class="tab-content" id="stats-tab">
+            <div class="upgrade-option">
+                <span><img src="muscle.png" alt=""> +5</span>
+                <span class="upgrade-level"><img src="levelup.png" style="width:25px; height:25px;" alt=""> <span id="power-upgrade-level">1</span></span>
+                <button onclick="upgradePower()"><span id="power-upgrade-cost">50 <img src="coin32.png" style="width:16px; height:16px;" alt=""></span></button>
+            </div>
+            <div class="upgrade-option">
+                <span><img src="crit.png" alt=""> +5%</span>
+                <span class="upgrade-level"><img src="levelup.png" style="width:25px; height:25px;" alt=""> <span id="crit-upgrade-level">0</span></span>
+                <button onclick="upgradeCrit()"><span id="crit-upgrade-cost">60 <img src="coin32.png" style="width:16px; height:16px;" alt=""></span></button>
+            </div>
+            <div class="upgrade-option">
+                <span><img src="coin32.png" alt=""> +5%</span>
+                <span class="upgrade-level"><img src="levelup.png" style="width:25px; height:25px;" alt=""> <span id="gold-upgrade-level">0</span></span>
+                <button onclick="upgradeGold()"><span id="gold-upgrade-cost">100 <img src="coin32.png" style="width:16px; height:16px;" alt=""></span></button>
+            </div>
+            <div class="upgrade-option" id="heart">
+                <span><img src="heart32.png" alt=""> +1</span>
+                <span class="upgrade-level"><img src="levelup.png" style="width:25px; height:25px;" alt=""> <span id="hp-upgrade-level">0</span></span>
+                <button onclick="upgradeHp()"><span id="hp-upgrade-cost">200 <img src="coin32.png" style="width:16px; height:16px;" alt=""></span></button>
+            </div>
+            <div class="upgrade-option" id="slow" style="display: none;">
+                <span><img src="slow.png" alt=""> -0.1</span>
+                <span class="upgrade-level"><img src="levelup.png" style="width:25px; height:25px;" alt=""> <span id="slow-upgrade-level">0</span></span>
+                <button onclick="upgradeSlow()"><span id="slow-upgrade-cost">50000 <img src="coin32.png" style="width:16px; height:16px;" alt=""></span></button>
+            </div>
+        </div>
+
+        <div class="tab-content" id="abilities-tab" style="display: none;">
+
+            <div class="upgrade-option" id="mage" onmouseover="showTooltip(event, 'Passive: Slow the monsters<br>Active (1): Freeze the monsters to the ground for 5 seconds.<br>Stat: Deals bonus damage to frozen enemies.')" onmouseout="hideTooltip()">
+                <span><img src="mage.png" alt="Mage" style="width:40px; height:40px;"></span>
+                <span class="upgrade-level"><img src="levelup.png" style="width:25px; height:25px;" alt=""> <span id="mage-level">0</span></span>
+                <button  onclick="upgradeMage()"><span id="mage-cost">100 <img src="coin32.png" style="width:16px; height:16px;" alt=""></span></button>
+                <span style="display: none;" id="mageL" class="upgrade-level" style="width:25px; height:25px;">Stat<img src="levelup.png" style="width:25px; height:25px;" alt=""><span id="mage-level-stat">0</span>
+                <span></span><button style="display: none;" id="mageStats"  onclick="upgradeMageStat()"><span id="mage-cost-stat">100 <img src="coin32.png" style="width:16px; height:16px;" alt=""></span></button></span>
+                <span style="display: none;" id="mage100" class="upgrade-level">
+                    <button id="mage100Stat" onclick="mage100Stat()"><span>500000 <img src="coin32.png" style="width:16px; height:16px;" alt=""></span></button></span>
+            </div>
+
+            <div class="upgrade-option" id="assassin" onmouseover="showTooltip(event, 'Passive: 20% chance to gain 50% more gold.<br>Active (1): Puts a debuff to all enemies for 7 seconds, deals bonus damage and has chance to execute kill them.<br>Stat: Critical strike chance and Critical strike damage.')" onmouseout="hideTooltip()">
+                <span><img src="assassin.png" alt="Assassin" style="width:40px; height:40px;"></span>
+                <span class="upgrade-level"><img src="levelup.png" style="width:25px; height:25px;" alt=""> <span id="assassin-level">0</span></span>
+                <button onclick="upgradeAssassin()"><span id="assassin-cost">100 <img src="coin32.png" style="width:16px; height:16px;" alt=""></span></button>
+                <span style="display: none;" id="assassinL" class="upgrade-level">Stat<img src="levelup.png" style="width:25px; height:25px;" alt=""><span id="assassin-level-stat">0</span>
+                <button style="display: none;" id="assassinStat" onclick="upgradeAssassinStat()"><span id="assassin-cost-stat">100 <img src="coin32.png" style="width:16px; height:16px;" alt=""></span></button></span>
+                
+                <span style="display: none;" id="assassin100" class="upgrade-level">
+                <button id="assassin100Stat" onclick="upgradeAssassin100Stat()"><span>5 <img src="coin32.png" style="width:16px; height:16px;" alt=""></span></button></span>
+            </div>
+
+            <div class="upgrade-option" id="berserk" onmouseover="showTooltip(event, 'Passive: Berserker gains 1 power permanently after each kill.<br>Active (1): Deals increased damage to the enemies for a short time.<br>Stat: Power')" onmouseout="hideTooltip()">
+                <span><img src="berserk.png" alt="Berserker" style="width:40px; height:40px;"></span>
+                <span class="upgrade-level"><img src="levelup.png" style="width:25px; height:25px;" alt=""> <span id="berserker-level">0</span></span>
+                <button onclick="upgradeBerserker()"><span id="berserker-cost">100 <img src="coin32.png" style="width:16px; height:16px;" alt=""></span></button>
+                <span style="display: none;" id="berserkL" class="upgrade-level">Stat<img src="levelup.png" style="width:25px; height:25px;" alt=""><span id="berserker-level-stat">0</span>
+                <button style="display: none;" id="berserkStat" onclick="upgradeBerserkerStat()"><span id="berserker-cost-stat">150 <img src="coin32.png" style="width:16px; height:16px;" alt=""></span></button></span>
+            </div>
+
+        </div>
+
+        <div id="tooltip" style="position: absolute; display: none; z-index: 999; background: rgba(0, 0, 0, 0.8); color: white; padding: 5px; border-radius: 5px; font-size: 12px;"></div>
+        
+        <div class="tab-content" id="skins-tab" style="display: none;">
+            <h3>Click to refresh!</h3>
+            <div id="wave-info">
+                <p>Wave <span id="next-wave-number">1</span></p>
+                <p><span id="monsters-hp">100</span> <img src="heart32.png" style="width:16px; height:16px;" alt=""></p>
+                <p><span id="gold-monster"></span> <img src="coin32.png" alt=""></p>
+            </div><br>
+            <div id="player-stats">
+                <p><span id="player-damage">20</span> <img src="muscle.png" style="width:16px; height:16px;" alt="" alt=""></p>
+                <p><img src="crit.png" style="width:16px; height:16px;" alt="" alt=""> Chance: <span id="player-crit-chance">0%</span></p>
+                <p><img src="crit.png" style="width:16px; height:16px;" alt="" alt=""> Damage: <span id="player-crit-damage">2x</span></p>
+                <p><span id="player-crit-damage"></span></p>
+            </div>
+            <div id="cast-info">
+                <p><span id="selected-cast">None</span></p>
+                <div id="cast-buffs" style="display: none;">
+                    <p>Passive <span id="buff0-text">None</span> (<span id="buff0-value">0</span>)</p>
+                    <p>Active <span id="buff1-text">None</span> (<span id="buff1-value">0</span>)</p>
+                    <p>Stat <span id="buff2-text">None</span> (<span id="buff2-value">0</span>)</p>
+                </div>
+            </div>
+        </div>        
+    </div>
+
+    <button onclick="startNextWave()">Next Wave</button>
+</div>
+<div id="game-over-overlay">
+    <div id="game-over-content">
+        <h1>Game Over</h1>
+        <p>Oh no! A monster reached the end.</p>
+        <button id="restart-button" onclick="restartGame()">Restart Game</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

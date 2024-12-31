@@ -1,0 +1,445 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap');
+
+body {
+    font-family: "Noto Sans KR", serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+    margin: 0;
+    overflow: hidden;
+}
+#closeB {
+    color: #000;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8ecc2;
+    border: 1px solid #8b5a2b;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  }
+  #tutbtn {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 100px;
+    height: 50px;
+    background: url('scroll.avif') no-repeat center;
+    background-size: cover;
+    color: #4b3b30;
+    font-size: 12px;
+    border: 2px solid #8b5a2b;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    text-shadow: 1px 1px #000;
+    image-rendering: pixelated;
+  }
+
+  #tutbtn:hover {
+    background-color: rgba(210, 180, 140, 0.8);
+    border-color: #a98c6c;
+  }
+  #closeB:hover {
+    background-color: #e6d3a3;
+  }
+
+.tutorial {
+    background: url('scroll.avif') no-repeat center;
+    border: 6px solid #8b5a2b;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    width: 590px;
+    height: 315px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    animation: fade-in 0.5s ease-out;
+    position: relative;
+  }
+
+  .scroll {
+    background-size: cover;
+    flex-grow: 1;
+    border-radius: 10px;
+    padding: 20px;
+    overflow: hidden;
+    position: relative;
+    image-rendering: pixelated;
+  }
+
+  .content {
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 20px;
+  }
+
+  .content h1 {
+    font-size: 30px;
+    color: #8b0000;
+    text-shadow: 1px 1px #000;
+    margin-bottom: 0px;
+  }
+
+  .content p {
+    color: #000;
+    margin: 5px 0;
+    font-weight: bold;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .scroll-button {
+    background: #4b3b30;
+    border: 2px solid #8b5a2b;
+    color: #f8ecc2;
+    font-size: 14px;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+
+  }
+  #prev-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+  }
+ #next-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .scroll-button:hover {
+    background: #8b5a2b;
+    color: #fff;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: url('mainBg.jpg') repeat;
+    background-size: auto;
+    animation: scrollBackground 20s linear infinite;
+}
+
+@keyframes scrollBackground {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -1790px 0;
+    }
+}
+
+.monster {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-image: url(eye.png);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    color: white;
+    font-weight: bold;
+}
+.boss{
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    background-image: url(boss.gif);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    color: white;
+    font-weight: bold;
+}
+.health-bar {
+    position: absolute;
+    bottom: -10px;
+    left: 5px;
+    width: 70px;
+    height: 10px;
+    background-color: rgba(255, 0, 0, 0.6);
+}
+
+.health-bar-inner {
+    width: 100%;
+    height: 100%;
+    background-color: green;
+}
+
+.damage-indicator {
+    position: absolute;
+    color: yellow;
+    font-weight: bold;
+    animation: fade-out 1s forwards;
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+#wave-summary {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.85);
+    color: #ffd700;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #444;
+    text-align: center;
+    display: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+}
+
+#wave-summary button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #444;
+    color: #ffd700;
+    border: 2px solid #666;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#wave-summary button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(255, 215, 0, 0.6);
+}
+
+
+#upgrade-container {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.upgrade-option {
+    margin: 10px 0;
+}
+
+.upgrade-option button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.upgrade-level {
+    margin-left: 5px;
+    font-size: 0.9em;
+    color: lightgray;
+}
+#start-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#start-content {
+    text-align: center;
+}
+
+#start-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#start-button:hover {
+    background-color: #45a049;
+}
+#game-over-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    display: none;
+}
+
+#game-over-content {
+    text-align: center;
+}
+
+#restart-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#restart-button:hover {
+    background-color: #45a049;
+}
+#summary-tabs {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 10px;
+    margin: 0 20px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.tab-button:hover {
+    background-color: #555;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+#tooltip {
+    position: absolute;
+    display: none;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 30px;
+    white-space: nowrap;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    line-height: 1.8;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.glow-border {
+    outline: 5px solid red;
+    outline-offset: -5px;
+    box-shadow: 0 0 20px 5px red;
+    transition: box-shadow 0.3s ease, outline 0.3s ease;
+    animation: glow 1.5s linear infinite;
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.8);
+    }
+    50% {
+        box-shadow: 0 0 20px 5px rgba(255, 0, 0, 1);
+    }
+    100% {
+        box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.8);
+    }
+}
+#settingsPage {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgb(0, 0, 0);
+    color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+#settingsPage label {
+    display: block;
+    margin: 20px 0 15px;
+}
+
+#settingsPage input[type="range"] {
+    width: 100%;
+}
+
+#openSettings {
+    margin-top: 5px;
+    margin-left: 5px;
+    padding: 5px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#closeSettings {
+    margin-top: 5px;
+    margin-left: 5px;
+    padding: 5px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
