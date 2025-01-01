@@ -38,8 +38,8 @@ let assassinInstantKillChance = 0.05;
 let berserkRage = 1.1
 let castUsedThisWave = false;
 
-const enemyDamageSound = new Audio('damaged.mp3');
-const enemyDeathSound = new Audio('unalived.mp3');
+const enemyDamageSound = new Audio('d2.mp3');
+const enemyDeathSound = new Audio('d1.mp3');
 const buttonClickSound = new Audio('button.mp3');
 const musicSound = new Audio('music.mp3');
 const abilityMageSound = new Audio('mage_sound.mp3');
