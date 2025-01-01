@@ -40,11 +40,11 @@ let castUsedThisWave = false;
 
 const enemyDamageSound = new Audio('damaged.mp3');
 const enemyDeathSound = new Audio('unalived.mp3');
-const buttonClickSound = new Audio('button.MP3');
+const buttonClickSound = new Audio('button.mp3');
 const musicSound = new Audio('music.mp3');
-const abilityMageSound = new Audio('mage_sound.MP3');
-const abilityAssassinSound = new Audio('assassin_sound.MP3');
-const abilityBerserkerSound = new Audio('berserk_sound.MP3');
+const abilityMageSound = new Audio('mage_sound.mp3');
+const abilityAssassinSound = new Audio('assassin_sound.mp3');
+const abilityBerserkerSound = new Audio('berserk_sound.mp3');
 
 const openSettings = document.getElementById('openSettings');
 const settingsPage = document.getElementById('settingsPage');
