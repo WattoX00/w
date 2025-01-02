@@ -30,7 +30,8 @@ let mageCost = 100;
 let assassinCost = 100;
 let berserkerCost = 100;
 let assassin100 = false
-let monsterSpeed = 1.80
+let monsterSpeed = 1.8
+let monsterSpeedHelp = monsterSpeed
 let magePassiveBonus = 35;
 let assassinCritBonus = { chance: 0, damage: 0 };
 let mageFreezeTargets = 1;
@@ -681,7 +682,7 @@ function applyAssassinDebuff() {
             setTimeout(() => {
                 monster.debuffed = false;
                 monster.element.style.background = '';
-                monsterSpeed += 0.1
+                monsterSpeed = monsterSpeedHelp
             }, 5000);
         }
     });
@@ -707,12 +708,12 @@ function activateBerserkerRage() {
                     monster.debuffed = false;
                     monster.element.style.background = '';
                     playerPower = dmg;
+                    monsterSpeed = monsterSpeedHelp
                 }, 2000);
             }
         });
         castUsedThisWave = true;
     }
-    monsterSpeed += 0.1
 }
 
 function activateCast() {
@@ -723,10 +724,12 @@ function activateCast() {
         freezeEnemies(mageFreezeTargets);
     } else if (currentCast === 'assassin') {
         abilityAssassinSound.play()
+        monsterSpeedHelp = monsterSpeed
         monsterSpeed -= 0.1
         applyAssassinDebuff();
     } else if (currentCast === 'berserker') {
         abilityBerserkerSound.play()
+        monsterSpeedHelp = monsterSpeed
         monsterSpeed -= 0.1
         activateBerserkerRage();
     }
