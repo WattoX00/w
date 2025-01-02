@@ -36,15 +36,9 @@
     <button id="openSettings"><i class="fa-solid fa-music"></i></button>
 
     <div id="settingsPage" style="display: none;">
-        <label>
-            <input type="checkbox" id="muteMusic"> Mute Music
-        </label>
+        
         <label>
             <input type="checkbox" id="muteSFX"> Mute SFX
-        </label>
-        <label>
-            Music Volume
-            <input type="range" id="musicVolume" min="0" max="1" step="0.01" value="1">
         </label>
         <label>
             SFX Volume
@@ -128,13 +122,14 @@
             <h3>Click to refresh!</h3>
             <div id="wave-info">
                 <p>Wave <span id="next-wave-number">1</span></p>
-                <p><span id="monsters-hp">100</span> <img src="heart32.png" style="width:16px; height:16px;" alt=""></p>
-                <p><span id="gold-monster"></span> <img src="coin32.png" alt=""></p>
+                <p><span id="monsters-hp">100</span> <img src="heart32.png" style="width:16px; height:16px;"></p>
+                <p><span id="monsterCount">1</span> <img src="eye.png" style="width:16px; height:16px;"></p>
+                <p><span id="gold-monster"></span> <img src="coin32.png"></p>
             </div><br>
             <div id="player-stats">
-                <p><span id="player-damage">20</span> <img src="muscle.png" style="width:16px; height:16px;" alt="" alt=""></p>
-                <p><img src="crit.png" style="width:16px; height:16px;" alt="" alt=""> Chance: <span id="player-crit-chance">0%</span></p>
-                <p><img src="crit.png" style="width:16px; height:16px;" alt="" alt=""> Damage: <span id="player-crit-damage">2x</span></p>
+                <p><span id="player-damage">20</span> <img src="muscle.png" style="width:16px; height:16px;"></p>
+                <p><img src="crit.png" style="width:16px; height:16px;"> Chance: <span id="player-crit-chance">0%</span></p>
+                <p><img src="crit.png" style="width:16px; height:16px;"> Damage: <span id="player-crit-damage">2x</span></p>
                 <p><span id="player-crit-damage"></span></p>
             </div>
             <div id="cast-info">

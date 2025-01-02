@@ -38,11 +38,11 @@ let mageFreezeTargets = 1;
 let assassinInstantKillChance = 0.05;
 let berserkRage = 1.1
 let castUsedThisWave = false;
+let monsterHelpCount = 1
 
 const enemyDamageSound = new Audio('d2.mp3');
 const enemyDeathSound = new Audio('d1.mp3');
 const buttonClickSound = new Audio('buttons.mp3');
-const musicSound = new Audio('music.mp3');
 const abilityMageSound = new Audio('magesound.mp3');
 const abilityAssassinSound = new Audio('assassinsound.mp3');
 const abilityBerserkerSound = new Audio('berserksound.mp3');
@@ -50,9 +50,7 @@ const abilityBerserkerSound = new Audio('berserksound.mp3');
 const openSettings = document.getElementById('openSettings');
 const settingsPage = document.getElementById('settingsPage');
 const closeSettings = document.getElementById('closeSettings');
-const muteMusic = document.getElementById('muteMusic');
 const muteSFX = document.getElementById('muteSFX');
-const musicVolume = document.getElementById('musicVolume');
 const sfxVolume = document.getElementById('sfxVolume');
 
 openSettings.addEventListener('click', () => {
@@ -65,10 +63,6 @@ closeSettings.addEventListener('click', () => {
     openSettings.style.display = 'block'
 });
 
-muteMusic.addEventListener('change', () => {
-    musicSound.muted = muteMusic.checked;
-});
-
 muteSFX.addEventListener('change', () => {
     buttonClickSound.muted = muteSFX.checked;
     abilityBerserkerSound.muted = muteSFX.checked;
@@ -76,10 +70,6 @@ muteSFX.addEventListener('change', () => {
     abilityMageSound.muted = muteSFX.checked;
     enemyDeathSound.muted = muteSFX.checked;
     enemyDamageSound.muted = muteSFX.checked;
-});
-
-musicVolume.addEventListener('input', () => {
-    musicSound.volume = musicVolume.value;
 });
 
 sfxVolume.addEventListener('input', () => {
@@ -405,6 +395,7 @@ function spawnWave() {
         if (assassin100) {
             monsterCount = Math.round(monsterCount*0.5)
         }
+        monsterHelpCount = monsterCount
         for (let i = 0; i < monsterCount; i++) {
             setTimeout(() => {
                 createMonster(extraHealth);
@@ -811,6 +802,7 @@ function updateUpgradeUI() {
 function updateSkinsTab() {
     document.getElementById('next-wave-number').textContent = waveNumber;
     document.getElementById('monsters-hp').textContent = 100 + (waveNumber - 1) * 10;
+    document.getElementById('monsterCount').textContent = monsterHelpCount;
     document.getElementById('gold-monster').textContent = gold+(gold*(goldB/100));
     
     document.getElementById('player-damage').textContent = playerPower;
@@ -855,8 +847,6 @@ function startGame() {
     document.getElementById('game-container').style.transition = "2s ease"
     spawnWave();
     gameLoop();
-    musicSound.loop = true;
-    musicSound.play()
 }
 function gameOver() {
     document.getElementById('game-over-overlay').style.display = 'flex';
