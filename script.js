@@ -70,6 +70,11 @@ muteMusic.addEventListener('change', () => {
 
 muteSFX.addEventListener('change', () => {
     buttonClickSound.muted = muteSFX.checked;
+    abilityBerserkerSound.muted = muteSFX.checked;
+    abilityAssassinSound.muted = muteSFX.checked;
+    abilityMageSound.muted = muteSFX.checked;
+    enemyDeathSound.muted = muteSFX.checked;
+    enemyDamageSound.muted = muteSFX.checked;
 });
 
 musicVolume.addEventListener('input', () => {
@@ -77,12 +82,12 @@ musicVolume.addEventListener('input', () => {
 });
 
 sfxVolume.addEventListener('input', () => {
+    buttonClickSound.volume = sfxVolume.value;
     abilityBerserkerSound.volume = sfxVolume.value;
     abilityAssassinSound.volume = sfxVolume.value;
     abilityMageSound.volume = sfxVolume.value;
     enemyDeathSound.volume = sfxVolume.value;
     enemyDamageSound.volume = sfxVolume.value;
-    buttonClickSound.volume = sfxVolume.value;
 });
 
 const pages = [
@@ -134,7 +139,6 @@ const pages = [
   document.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', () => {
         buttonClickSound.currentTime = 0;
-        buttonClickSound.volume = 0.5;
         buttonClickSound.play();
     });
 });
@@ -203,7 +207,6 @@ function createMonster(extraHealth = 0) {
 
     monster.addEventListener('click', () => {
         let damage = calculateDamage(monsterData, playerPower);
-        enemyDamageSound.volume = 0.1;
         enemyDamageSound.currentTime = 0;
         enemyDamageSound.play();
         if (Math.random() < critChance / 100) {
@@ -226,7 +229,6 @@ function createMonster(extraHealth = 0) {
                 playerPower+=1
             }
             score += gold+(gold*(goldB/100));
-            enemyDeathSound.volume = 0.3;
             enemyDeathSound.play();
             monster.remove();
             monsters.splice(monsters.indexOf(monsterData), 1);
@@ -273,7 +275,6 @@ function spawnBoss() {
 
     boss.addEventListener('click', () => {
         let damage = calculateDamage(bossData, playerPower);
-        enemyDamageSound.volume = 0.1;
         enemyDamageSound.currentTime = 0;
         enemyDamageSound.play();
         if (Math.random() < critChance / 100) {
@@ -288,7 +289,6 @@ function spawnBoss() {
 
         if (bossData.health <= 0) {
             score += gold*10;
-            enemyDeathSound.volume = 0.3;
             enemyDeathSound.play();
             boss.remove();
             monsters.splice(monsters.indexOf(bossData), 1);
@@ -418,6 +418,15 @@ function spawnWave() {
 
 
 function endWave() {
+    if (waveNumber === 100){
+        if (currentCast === 'mage') {
+            
+                document.getElementById("mage100").style.display = 'block'
+        }
+        else if (currentCast === 'assassin') {
+                document.getElementById("assassin100").style.display = 'block'
+        }
+    }
     waveComplete = true;
     hp=0
     document.getElementById('game-container').classList.remove('glow-border');
@@ -512,9 +521,7 @@ function upgradeMage() {
     document.getElementById("berserk").style.display = 'none'
     document.getElementById("mageStats").style.display = 'inline'
     document.getElementById("mageL").style.display = 'block'
-    if (mageLevel === 99) {
-        document.getElementById("mage100").style.display = 'block'
-    }
+    
     if (score >= mageCost) {
         if (mageLevel === 0) {
             monsterSpeed -= 0.8
@@ -564,9 +571,7 @@ function upgradeAssassin() {
     document.getElementById("berserk").style.display = 'none'
     document.getElementById("assassinStat").style.display = 'inline'
     document.getElementById("assassinL").style.display = 'block'
-    if (assassinLevel === 99) {
-        document.getElementById("assassin100").style.display = 'block'
-    }
+    
     if (score >= assassinCost) {
         score -= assassinCost;
         assassinLevel++;
@@ -714,16 +719,13 @@ function activateCast() {
     if (castUsedThisWave) return;
 
     if (currentCast === 'mage') {
-        abilityMageSound.volume = 0.1;
         abilityMageSound.play()
         freezeEnemies(mageFreezeTargets);
     } else if (currentCast === 'assassin') {
-        abilityAssassinSound.volume = 0.1;
         abilityAssassinSound.play()
         monsterSpeed -= 0.1
         applyAssassinDebuff();
     } else if (currentCast === 'berserker') {
-        abilityBerserkerSound.volume = 0.2;
         abilityBerserkerSound.play()
         monsterSpeed -= 0.1
         activateBerserkerRage();
