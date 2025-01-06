@@ -13,6 +13,7 @@ let y=0
 let upgradeCosts = { power: 50, crit: 60, gold: 100, hp: 200, slow: 30000 };
 let upgradeLevels = { power: 1, crit: 0, gold: 0, hp: 0, slow: 0 };
 let isCriticalStrike = false
+let criticalStrike = 2
 let currentCast = null;
 let mageLevel = 0;
 let assassinLevel = 0;
@@ -201,7 +202,7 @@ function createMonster(extraHealth = 0) {
         enemyDamageSound.currentTime = 0;
         enemyDamageSound.play();
         if (Math.random() < critChance / 100) {
-            damage *= (2+assassinCritBonus['damage']);
+            damage *= (criticalStrike+assassinCritBonus['damage']);
             isCriticalStrike = true
         }
 
@@ -455,12 +456,23 @@ function upgradePower() {
 }
 
 function upgradeCrit() {
+    if (critChance >= 100) {
+        if (score >= upgradeCosts.crit) {
+            score -= upgradeCosts.crit;
+            upgradeLevels.crit++;
+            criticalStrike += 0.1
+            upgradeCosts.crit = Math.floor(upgradeCosts.crit * 2.5);
+            updateUpgradeUI();
+        }
+    }
+    else {
     if (score >= upgradeCosts.crit) {
         score -= upgradeCosts.crit;
         critChance += 5;
         upgradeLevels.crit++;
-        upgradeCosts.crit = Math.floor(upgradeCosts.crit * 1.5);
+        upgradeCosts.crit = Math.floor(upgradeCosts.crit * 2);
         updateUpgradeUI();
+        }
     }
 }
 function upgradeGold() {
@@ -543,6 +555,16 @@ function upgradeMageStat(){
     updateUpgradeUI();
 }
 function upgradeAssassinStat(){
+    if (critChance >= 100) {
+        if (score >= assassinCostStat) {
+            score -= assassinCostStat;
+            assassinLevelStat++;
+            assassinCostStat = Math.ceil(assassinCostStat * 2);
+            assassinCritBonus.damage += 0.15;
+        }
+        updateUpgradeUI();
+    }
+    else {
     if (score >= assassinCostStat) {
         score -= assassinCostStat;
         assassinLevelStat++;
@@ -551,8 +573,8 @@ function upgradeAssassinStat(){
         assassinCritBonus.damage += 0.1;
     }
     updateUpgradeUI();
+    }
 }
-
 function upgradeAssassin() {
     if (currentCast && currentCast !== 'assassin') {
         alert('You can only choose one cast per game!');
@@ -804,10 +826,11 @@ function updateSkinsTab() {
     document.getElementById('monsters-hp').textContent = 100 + (waveNumber - 1) * 10;
     document.getElementById('monsterCount').textContent = monsterHelpCount;
     document.getElementById('gold-monster').textContent = gold+(gold*(goldB/100));
+    document.getElementById('movementSpeed').textContent = Math.round(monsterSpeed*100);
     
     document.getElementById('player-damage').textContent = playerPower;
     document.getElementById('player-crit-chance').textContent = critChance + '%';
-    document.getElementById('player-crit-damage').textContent = (2+assassinCritBonus['damage']) + 'x';
+    document.getElementById('player-crit-damage').textContent = (criticalStrike+assassinCritBonus['damage']).toFixed(2) + 'x';
 
     document.getElementById('selected-cast').innerHTML = 
     `${currentCast || 'None'} <img src="levelup.png" alt="Mouse Icon" style="width:16px; height:16px;">`;
@@ -815,7 +838,7 @@ function updateSkinsTab() {
     if (currentCast === 'mage') {
         document.getElementById('cast-buffs').style.display = 'block';
         document.getElementById('buff0-text').textContent = 'Slowing monsters';
-        document.getElementById('buff0-value').textContent = -1 + 'Movement Speed';
+        document.getElementById('buff0-value').textContent = -80 + 'Movement Speed';
         document.getElementById('buff1-text').textContent = 'Freeze Targets';
         document.getElementById('buff1-value').textContent = mageFreezeTargets;
         document.getElementById('buff2-text').textContent = 'Bonus Damage to frozen monsters';
@@ -827,7 +850,7 @@ function updateSkinsTab() {
         document.getElementById('buff1-text').textContent = 'Execute Kill Chance';
         document.getElementById('buff1-value').textContent = Math.round((assassinInstantKillChance * 100)) + '%';
         document.getElementById('buff2-text').textContent = 'Crit Bonus';
-        document.getElementById('buff2-value').textContent = assassinCritBonus.damage + '%';
+        document.getElementById('buff2-value').textContent = Math.round((assassinCritBonus.damage * 100)) + '%';
     } else if (currentCast === 'berserker') {
         document.getElementById('cast-buffs').style.display = 'block';
         document.getElementById('buff0-text').textContent = 'Power from moster kill';
